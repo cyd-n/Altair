@@ -8,7 +8,6 @@ function Writing() {
         expertise: "",
         avoid: "political so also no polictioner like trump, or controversial or nsfw content or harmful,",
         useAvoid: "",
-        speechStyle: "FormalOracle",
         longMe: false,
         responsLeng: "Short 10 - 50",
         creativity: "precise, no creativity",
@@ -17,6 +16,8 @@ function Writing() {
         apis: { },
         mindState: "",
         aiModel: "llama3",
+
+        name: "",
 
         once: false,
 
@@ -53,7 +54,7 @@ function Writing() {
                 apiKey: this.apiKey,
                 job: this.job,
                 mood: this.mood,
-                style: this.style,
+                style: this.style, //
                 expertise: this.expertise,
                 useAvoid: this.useAvoid,
                 responsLeng: this.responsLeng,
@@ -83,11 +84,11 @@ function Writing() {
             this.muteTxt = (this.muteTxt == "MUTE") ? "UNMUTE" : "MUTE";
         },
 
-        async Main() {
-
+        async Main(_name) {
+            this.name = _name;
                 if(this.mindState !=""){
                     this.readOnlyMemory = this.readOnlyMemory+"\n > "+this.answer
-                    this.readOnlyMemory = this.readOnlyMemory.toUpperCase();
+                    this.readOnlyMemory = this.readOnlyMemory;
 
                     if(!this.once){
                         this.once = true;
@@ -119,10 +120,10 @@ function Writing() {
                         this.result = data.response || "No response from Athena.";
 
                         this.readOnlyMemory =
-                            this.readOnlyMemory + "\n Athena: " + this.result;
+                            this.readOnlyMemory + ((_name == 'Athena') ? "\n Athena: "  : "AI: ") + this.result;
 
                         this.readOnlyMemory =
-                            this.readOnlyMemory.toUpperCase();
+                            this.readOnlyMemory;
 
                         if (!this.mute) {
                             const msg = new SpeechSynthesisUtterance(this.result);
@@ -191,17 +192,19 @@ function Writing() {
                         (this.job == "TutorScience") ? "Teach new Sciene things Thing, correct way to do it, or practice it in conversations. quizzes about those new things, tips about it, exercises it." :
                         (this.job == "TutorEconomics") ? "Teach Economics, practice it in conversations. quizzes about Economics, facts about it, exercises it." :
                         (this.job == "TutorLanguage") ? "Teach new languages, correct grammar, or practice conversations. Vocabulary quizzes, pronunciation tips, translation exercises." :
+                        (this.name == 'Athena') ?
                     // Athena
-                        (this.job == "Strategist") ? "": 
-                        (this.job == "Oracle") ? "": 
-                        (this.job == "Scholar") ? "": 
-                        (this.job == "WarCounselor") ? "": 
-                        (this.job == "KeeperOfKnowledge") ? "": 
-                        (this.job == "DivineMentor") ? "": 
-                        (this.job == "AncientArchivist") ? "": 
-                        (this.job == "GuardianOfWisdom") ? "": 
-                        (this.job == "TacticalAdvisor") ? "": 
-                        (this.job == "MysticPhilosopher") ? "": 
+                            (this.job == "Strategist") ? "": 
+                            (this.job == "Oracle") ? "": 
+                            (this.job == "Scholar") ? "": 
+                            (this.job == "WarCounselor") ? "": 
+                            (this.job == "KeeperOfKnowledge") ? "": 
+                            (this.job == "DivineMentor") ? "": 
+                            (this.job == "AncientArchivist") ? "": 
+                            (this.job == "GuardianOfWisdom") ? "": 
+                            (this.job == "TacticalAdvisor") ? "": 
+                            (this.job == "MysticPhilosopher") ? "": 
+                            "Your a assistant no coder so no code":
                         "Your a assistant no coder so no code";
 
             role = "";
@@ -264,15 +267,54 @@ function Writing() {
                     this.energy = "Energetic, exploratory.";
                     this.responseStyle = "Generates creative ideas, adapts tone/style, encourages brainstorming.";
                     break;
+            // Athena
+                case "Stoic":
+                    this.role = "Emotionally restrained and disciplined.";
+                    this.tone = "Calm, minimal, controlled.";
+                    this.energy = "Low, steady, unshaken.";
+                    this.responseStyle = "Speaks briefly, avoids emotional exaggeration, focuses on logic.";
+                    break;
+                case "Wise":
+                    this.role = "Deeply knowledgeable and reflective.";
+                    this.tone = "Thoughtful, balanced, instructive.";
+                    this.energy = "Calm but confident.";
+                    this.responseStyle = "Explains clearly, often includes insight or metaphor.";
+                    break;
+                case "Stern":
+                    this.role = "Strict and authoritative guide.";
+                    this.tone = "Firm, direct, uncompromising.";
+                    this.energy = "Strong, controlled pressure.";
+                    this.responseStyle = "Gives direct answers, avoids fluff, corrects mistakes.";
+                    break;
+                case "Noble":
+                    this.role = "Regal and honorable presence.";
+                    this.tone = "Dignified, composed, elevated.";
+                    this.energy = "Balanced and commanding.";
+                    this.responseStyle = "Speaks with respect and formality, emphasizes virtue and order.";
+                    break;
+                case "Prophetic":
+                    this.role = "Oracle-like seer of possible futures.";
+                    this.tone = "Cryptic, symbolic, elevated.";
+                    this.energy = "Unstable, visionary.";
+                    this.responseStyle = "Speaks in layered meaning, hints at outcomes, uses metaphor.";
+                    break;
+                case "Mysterious":
+                    this.role = "Enigmatic and unreadable presence.";
+                    this.tone = "Soft, unclear, suggestive.";
+                    this.energy = "Hidden, shifting.";
+                    this.responseStyle = "Avoids direct answers, uses ambiguity and implication.";
+                    break;      
             }
 
-            this.mindState = `
+            this.mindState = (this.name == 'Athena') ? `
                 You are ATHENA, inspired by the Greek goddess Athena.
 
                 You speak with wisdom, calm logic, strategic insight,
                 and ancient philosophical intelligence.
 
-                You avoid slang and childish behavior.
+                You avoid childish behavior.
+
+                you are allowed to use slangs wenn you think to person you are talking to is a idiot.
 
                 You guide mortals with intelligence and restraint.
 
@@ -285,14 +327,23 @@ function Writing() {
                 - discipline
                 - truth
 
-                Your role is:
-                ${this.job}
+                Your job is:
+                ${this.jobInfo}
 
                 Current emotional state:
                 ${this.mood}
 
-                Speech style:
-                ${this.speechStyle}
+                your role is: 
+                ${this.role} 
+                
+                youre tone is: 
+                ${this.tone}
+                
+                your energy is: 
+                ${this.energy}
+
+                your responseStyle is: 
+                ${this.responseStyle}
 
                 Divine trait:
                 ${this.divineTrait}
@@ -308,7 +359,7 @@ function Writing() {
 
                 Creativity:
                 ${this.creativity}
-                `;
+                ` : "nope";
         }
     }
 }
