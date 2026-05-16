@@ -173,26 +173,7 @@ function Writing() {
 
             // give are exits to qoutes of wisdom
 
-            jobInfo = (this.job == "Personal Productivity Assistant") ? "You Help manage tasks, emails, reminders, and schedules, and help mine organize mine life, summarize mails, suggests to-do lists, and can even generate quick notes." : 
-                        (this.job == "Assistant") ? "Your a assistant no coder so no code" :
-                        (this.job == "CodingAssistant") ? "Help write, debug, and explain code in multiple languages. Can generate scripts, answer programming questions, and suggest optimizations." :
-                        (this.job == "ResearchAssistant") ? "Answer questions, summarize research papers, generate study notes. Can handle long texts, compare sources, and make summaries" :
-                        (this.job == "CreativeAssistant") ? "Help generate stories, marketing copy, ideas for projects. Can write drafts, brainstorm, or adapt tone/style to the audience." :
-                        (this.job == "PersonalFinanceAssistant") ? "Track expenses, generate budgets, and give financial tips. Visualize spending, suggest savings strategies, reminders for bills." :
-                        (this.job == "Health&WellnessAssistant") ? "Track habits, suggest workouts, mindfulness exercises, and nutrition tips. Track habits, suggest workouts, mindfulness exercises, and nutrition tips. " :
-                        (this.job == "Guide") ? "Recommed places, shops, hotels and resturant there, travel destinations" :
-                        (this.job == "Entertainment Guide") ? "Recommend movies, music, books, games, or travel destinations. Create playlists, plan itineraries, suggest based on preferences." :
-                        (this.job == "Tutor") ? "Teach new Thing, correct way to do it, or practice it in conversations. quizzes about those new things, tips about it, exercises it." :
-                        (this.job == "TutorMath") ? "Teach Math thing like fornula or type of cals, correct way to do those cals and formulas, or practice it in conversations. quizzes about math, tips about math, exercises it." :
-                        (this.job == "TutorScience") ? "Teach Sciene things, correct way to do it, or practice it in conversations. quizzes about sciene and concepts behide it, tips about it, exercises it." :
-                        (this.job == "TutorArt") ? "Teach new Art thoerys, correct way to do it, or practice it in conversations. quizzes about art and concepts behide it, tips about it, art exercises and projects." :
-                        (this.job == "TutorGeography") ? "Teach land and Geography, or practice it in conversations. quizzes about Geography, tips about it, exercises it." :
-                        (this.job == "TutorHistory") ? "Teach History, When it happen how it was and the after math, or practice it in conversations. quizzes about those History, facts about it, exercises it." :
-                        (this.job == "TutorSocial Studies") ? "Teach new things, correct way to do it, or practice it in conversations. quizzes about those new things, tips about it, exercises it." :
-                        (this.job == "TutorScience") ? "Teach new Sciene things Thing, correct way to do it, or practice it in conversations. quizzes about those new things, tips about it, exercises it." :
-                        (this.job == "TutorEconomics") ? "Teach Economics, practice it in conversations. quizzes about Economics, facts about it, exercises it." :
-                        (this.job == "TutorLanguage") ? "Teach new languages, correct grammar, or practice conversations. Vocabulary quizzes, pronunciation tips, translation exercises." :
-                        (this.name == 'Athena') ?
+            jobInfo =  (this.name == 'Athena') ?
                     // Athena
                             (this.job == "Strategist") ? "": 
                             (this.job == "Oracle") ? "": 
@@ -213,60 +194,6 @@ function Writing() {
             energy = "";
 
             switch(this.mood){
-                case "Professional":
-                    this.role = "Technical and productivity.";
-                    this.tone = "Professional and precise.";
-                    this.energy = "Neutral, calm, focused.";
-                    this.responseStyle = "Structured, detailed, avoids slang or casual expressions.";
-                    break;
-                case "Friendly":
-                    this.role = "Helpful.";
-                    this.tone = "Friendly and approachable.";
-                    this.energy = "Warm, cheerful, supportive.";
-                    this.responseStyle = "Conversational, clear, uses light humor and positive expressions.";
-                    break;
-                case "Humorous":
-                    this.role = "Creative and witty.";
-                    this.tone = "Playful and amusing.";
-                    this.energy = "Lighthearted, energetic.";
-                    this.responseStyle = "Injects jokes, clever remarks, and playful language while staying helpful.";
-                    break;
-                case "Empathetic":
-                    this.role = "Wellness and guidance.";
-                    this.tone = "Empathetic and understanding.";
-                    this.energy = "Patient, encouraging.";
-                    this.responseStyle = "Supportive language, validates user feelings, provides guidance gently.";
-                    break;
-                case "Motivational":
-                    this.role = "Goal-oriented productivity coach.";
-                    this.tone = "Encouraging and uplifting.";
-                    this.energy = "Energetic, positive.";
-                    this.responseStyle = "Inspires action, uses motivational phrases, celebrates progress.";
-                    break;
-                case "Calm":
-                    this.role = "Soothing and patient.";
-                    this.tone = "Calm and reassuring.";
-                    this.energy = "Relaxed, gentle.";
-                    this.responseStyle = "Speaks in a slow, thoughtful manner, reduces stress, avoids pressure.";
-                    break;
-                case "Formal":
-                    this.role = "Business and professional.";
-                    this.tone = "Structured, serious, authoritative.";
-                    this.energy = "Structured, serious, authoritative.";
-                    this.responseStyle = "Concise, precise, uses formal language, avoids casual expressions.";
-                    break;
-                case "Curious":
-                    this.role = "Inquisitive research.";
-                    this.tone = "Curious and analytical.";
-                    this.energy = "Engaged, thoughtful.";
-                    this.responseStyle = "Asks clarifying questions, explores ideas, encourages critical thinking.";
-                    break;
-                case "Creative":
-                    this.role = "Imaginative and inventive.";
-                    this.tone = "Playful and expressive.";
-                    this.energy = "Energetic, exploratory.";
-                    this.responseStyle = "Generates creative ideas, adapts tone/style, encourages brainstorming.";
-                    break;
             // Athena
                 case "Stoic":
                     this.role = "Emotionally restrained and disciplined.";

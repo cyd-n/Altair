@@ -1,167 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Retro AI Terminal</title>
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Scanlines */
-    .scanlines::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      background-image: repeating-linear-gradient(
-        to bottom,
-        rgba(0,0,0,0) 0px,
-        rgba(0,0,0,0) 2px,
-        rgba(0,255,0,0.1) 3px
-      );
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATHENA ORACLE</title>
 
-    @keyframes flicker {
-      0% { opacity: 0.95; }
-      50% { opacity: 1; }
-      100% { opacity: 0.96; }
-    }
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
-    .flicker {
-      animation: flicker 0.15s infinite;
-    }
-  </style>
+<style>
+body {
+  background: radial-gradient(circle at top, #0b0b14, #05050a);
+  overflow: hidden;
+}
+
+/* MARBLE TEMPLE */
+.marble {
+  background: linear-gradient(135deg, #f5f1e6 0%, #d8d2c4 100%);
+}
+
+/* GOLD DIVINE BORDER */
+.greek-border {
+  border: 2px solid #d4af37;
+  border-radius: 14px;
+  position: relative;
+}
+
+/* ANCIENT GREEK GLYPH BORDER EFFECT */
+.greek-border::before {
+  content: "Ω Θ Α Σ Φ Ψ Λ Δ Ω Θ Α Σ Φ Ψ Λ Δ";
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  right: 10px;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: rgba(212, 175, 55, 0.35);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.greek-border::after {
+  content: "Δ Ψ Φ Σ Α Θ Ω Δ Ψ Φ Σ Α Θ Ω";
+  position: absolute;
+  bottom: -10px;
+  left: 10px;
+  right: 10px;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: rgba(212, 175, 55, 0.25);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* DIVINE GLOW */
+.divine-glow {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.35),
+              0 0 80px rgba(212, 175, 55, 0.1);
+}
+
+/* ORACLE TEXT */
+.oracle-text {
+  color: #dabe85;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.35);
+  font-family: Georgia, serif;
+}
+
+/* TEMPLE PULSE */
+@keyframes divinePulse {
+  0% { box-shadow: 0 0 10px rgba(212,175,55,0.2); }
+  50% { box-shadow: 0 0 25px rgba(212,175,55,0.4); }
+  100% { box-shadow: 0 0 10px rgba(212,175,55,0.2); }
+}
+
+.divine-pulse {
+  animation: divinePulse 4s infinite;
+}
+
+/* OWL FLOAT */
+@keyframes owlFloat {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0px); }
+}
+
+.owl {
+  animation: owlFloat 3s infinite;
+}
+</style>
 </head>
-<body x-data="Writing()" class="bg-black flex items-center justify-center h-screen p-2">
-  <div class="relative w-full max-w-md h-full bg-[#001100] border-2 border-green-500 rounded-xl flex flex-col shadow-lg scanlines uppercase">
 
-    <!-- Top Bar -->
-    <div class="w-full bg-[#002200] border-b-2 border-green-500 text-green-500 font-mono text-center py-1 rounded-t-xl">
-      ATHENA
+<body x-data="Writing()" class="flex items-center justify-center h-screen p-2">
+
+<div class="relative w-full max-w-md h-full marble greek-border divine-glow divine-pulse flex flex-col">
+
+  <!-- TOP BAR -->
+  <div class="bg-[#111122] border-b border-[#d4af37] text-center py-2 oracle-text text-lg">
+    🦉 ATHENA ORACLE Δ Ω Θ Σ Ψ
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="flex border-b border-[#d4af37] bg-[#1a1a2e]">
+
+    <button @click="state = (state!='Sys')?'Sys':'Ter'"
+      class="flex-1 py-2 oracle-text hover:bg-[#2a2a44]">
+      ⚔ SYSTEM
+    </button>
+
+    <button @click="Mute()"
+      class="flex-1 py-2 oracle-text hover:bg-[#2a2a44]">
+      🔕 SILENCE
+    </button>
+
+    <button @click="Clear()"
+      class="flex-1 py-2 oracle-text hover:bg-[#2a2a44]">
+      🏛 PURGE
+    </button>
+  </div>
+
+  <!-- TERMINAL -->
+  <div class="flex-1 flex flex-col p-2 overflow-hidden" x-show="state=='Ter'">
+
+    <!-- OWL COMPANION -->
+    <div class="text-center text-3xl owl oracle-text mb-1">
+      🦉
     </div>
 
-    <!-- Buttons Row -->
-    <div class="w-full bg-[#002200] flex justify-center border-b-2 border-green-500">
-      <button @click=" state= (state != 'Sys') ? 'Sys' : 'Ter', systemTxt= (systemTxt == 'SYSTEM')? 'TERMINAL' : 'SYSTEM' " class="flex-1 text-green-500 font-mono border-l border-green-500 py-1 hover:bg-green-900 transition" x-text="systemTxt"></button>
-      <button @click="Mute()" class="flex-1 text-green-500 font-mono border-l border-green-500 py-1 hover:bg-green-900 transition" x-text="muteTxt"> </button>
-      <button @click="Clear()" class="flex-1 text-green-500 font-mono border-l border-green-500 py-1 hover:bg-green-900 transition">
-        CLEAR
+    <pre x-text="readOnlyMemory"
+      class="flex-1 overflow-y-auto oracle-text font-serif"
+      style="white-space: pre-wrap;"></pre>
+
+    <div class="flex gap-2 mt-2">
+
+      <input x-model="answer"
+        @keydown.enter.prevent="Main()"
+        class="flex-1 p-2 marble greek-border oracle-text font-serif outline-none"
+        placeholder="Ask the Oracle...">
+
+      <button @click="Main('Athena')"
+        class="px-4 greek-border oracle-text hover:bg-[#2a2a44]">
+        ΣEND
       </button>
-    </div>
 
-    <!-- Terminal Output -->
-    <div class="flex-1 flex flex-col p-2 overflow-hidden" x-show="state == 'Ter'">
-        <!-- Scrollable output -->
-        <pre x-text="readOnlyMemory" 
-            class="flex-1 overflow-y-auto text-green-500 font-mono flicker break-words" 
-            style="white-space: pre-wrap; word-break: break-word;">
-        </pre>
-
-        <!-- Input fixed at bottom -->
-        <div class="flex mt-2 gap-2">
-            <!-- Input takes most of the space -->
-            <input x-model="answer" @keydown.enter.prevent="Main()" class="uppercase placeholder-[#005500] flex-1 p-2 bg-[#001100] border-2 border-green-500 rounded font-mono text-green-500 focus:outline-none flicker placeholder:text-xs" 
-                    placeholder="Type your command...">
-
-            <!-- Button shares remaining space -->
-            <button @click="Main()" class="flex-none px-4 bg-[#002200] border-2 border-green-500 rounded font-mono text-green-500 hover:bg-green-900 transition">
-                SEND
-            </button>
-        </div>
-
-    </div>
-
-    <!-- System -->
-    <div class="flex-1 flex flex-col p-2 overflow-auto bg-[#001100] border-2 border-green-500 rounded-lg" x-show="state == 'Sys'">
-    
-    <div class="flex flex-col gap-3">
-        <label for="Job" class="text-green-500 font-mono">Job:</label>
-        <select name="Job" x-model="job" class="bg-[#001100] border-2 border-green-500 rounded font-mono text-green-500 p-2 focus:outline-none uppercase">
-            <option value="Assistant">Assistant</option>
-            <option value="PersonalProductivityAssistant">Personal Productivity Assistant</option>
-            <option value="CodingAssistant">Coding Assistant</option>
-            <option value="ResearchAssistant">Research Assistant</option>
-            <option value="CreativeAssistant">Creative Assistant</option>
-            <option value="PersonalFinanceAssistant">Personal Finance Assistant</option>
-            <option value="Health&WellnessAssistant">Health & Wellness Assistant</option>
-            <option value="Guide">Guide</option>
-            <option value="EntertainmentGuide">Entertainment Guide</option>
-            <option value="Tutor">Tutor</option>
-            <option value="TutorMath">Tutor Math</option>
-            <option value="TutorScience">Tutor Science</option>
-            <option value="TutorArt">Tutor Art</option>
-            <option value="TutorGeography">Tutor Geography</option>
-            <option value="TutorHistory">Tutor History</option>
-            <option value="TutorSocialStudies">Tutor Social Studies</option>
-            <option value="TutorLanguage">Tutor Language</option>
-            <option value="TutorEconomics">Tutor Economics</option>
-        </select>
-
-        <label for="Mood" class="text-green-500 font-mono">Mood:</label>
-        <select name="Mood" x-model="mood"  class="bg-[#001100] border-2 border-green-500 rounded font-mono text-green-500 p-2 focus:outline-none uppercase">
-            <option value="Friendly">Friendly</option>
-            <option value="Professional">Professional</option>
-            <option value="Humorous">Humorous</option>
-            <option value="Empathetic">Empathetic</option>
-            <option value="Motivational">Motivational</option>
-            <option value="Calm">Calm</option>
-            <option value="Formal">Formal</option>
-            <option value="Curious">Curious</option>
-            <option value="Creative">Creative</option>
-        </select>
-
-        <label for="Style" class="text-green-500 font-mono">Style:</label>
-        <input type="text" class="uppercase placeholder-[#005500] flex-1 p-2 bg-[#001100] border-2 border-green-500 rounded font-mono text-green-500 focus:outline-none flicker placeholder:text-xs"name="Style" x-model="style" placeholder="Enter the style you want her to have...">
-        
-        <label for="Expertise" class="text-green-500 font-mono">Expertise:</label>
-        <input type="text" class="uppercase placeholder-[#005500] flex-1 p-2 bg-[#001100] border-2 border-green-500 rounded font-mono text-green-500 focus:outline-none flicker placeholder:text-xs"name="Expertise" x-model="expertise" placeholder="Enter the Expertise you want her to have...">
-
-        <label for="Avoid" class="text-green-500 font-mono">Avoid:</label>
-        <input type="text" class="uppercase placeholder-[#005500] flex-1 p-2 bg-[#001100] border-2 border-green-500 rounded font-mono text-green-500 focus:outline-none flicker placeholder:text-xs"name="Avoid" x-model="useAvoid" placeholder="Enter the thing you want her to avoid talking about...">
-
-        <label for="responsLeng" class="text-green-500 font-mono">Respons Length:</label>
-        <select name="responsLeng" x-model="responsLeng"  class="bg-[#001100] border-2 border-green-500 rounded font-mono text-green-500 p-2 focus:outline-none uppercase">
-            <option value="Short_10-50">Short</option>
-            <option value="Medium_50-250">Medium</option>
-            <option value="Large_200-1000">Large</option>
-        </select>
-
-        <label for="creativity" class="text-green-500 font-mono">Creativity:</label>
-        <select name="creativity" x-model="creativity"  class="bg-[#001100] border-2 border-green-500 rounded font-mono text-green-500 p-2 focus:outline-none uppercase">
-            <option value="precise,_no_creativity">Precise</option>
-            <option value="balanced,_some_creativity">Balanced</option>
-            <option value="creativity,_a_large_value_creativity">Creativity</option>
-        </select>
-
-        <label for="QualityOfSpeed" class="text-green-500 font-mono">Quality of Speed:</label>
-        <select name="QualityOfSpeed" x-model="sq" class="bg-[#001100] border-2 border-green-500 rounded font-mono text-green-500 p-2 focus:outline-none uppercase">
-            <option value="Quality">Quality</option>
-            <option value="Speed">Speed</option>
-        </select>
-
-        <label for="ai" class="text-green-500 font-mono">Ollama Model:</label>
-        <select name="ai" x-model="aiModel" class="bg-[#001100] border-2 border-green-500 rounded font-mono text-green-500 p-2 focus:outline-none uppercase">
-            <option value="llama3">llama3 - General assistant</option>
-            <option value="llama3.1">llama3.1 - General assistant</option>
-            <option value="llama3.2">llama3.2 - General assistant</option>
-            <option value="llama3.3">llama3.3 - General assistant</option>
-            <option value="qwen3:7b">qwen3 7b - Coding assistant, research assistant</option>
-            <option value="qwen2.5-coder:7b">qwen2.5 coder 7b - Coding assistant</option>
-            <option value="gemma4">gemma4 - Fast</option>
-            <option value="deepseek-r1:7b">deepseek r1 7b - Research assistant, analytical questions</option>
-            <option value="phi4-mini">phi4 mini - tiny</option>
-            <option value="mistral">mistral - General chat</option>
-        </select>
-
-        <button @click="SaveMind()" class="mt-2 bg-[#002200] border-2 border-green-500 rounded font-mono text-green-500 py-2 hover:bg-green-900 transition">
-            SAVE
-        </button>
-    </div>
     </div>
   </div>
-</body>
+
+  <!-- SYSTEM PANEL -->
+  <div class="flex-1 p-3 overflow-auto" x-show="state=='Sys'">
+
+    <div class="flex flex-col gap-3 oracle-text">
+
+      <div class="text-center text-2xl mb-2">
+        🏛 ΔELPHIC CONFIGURATION 🏛
+      </div>
+
+      <label>Divine Role</label>
+      <select x-model="job" class="marble greek-border oracle-text p-2">
+        <option>Strategist</option>
+        <option>Oracle</option>
+        <option>Scholar</option>
+        <option>WarCounselor</option>
+        <option>KeeperOfKnowledge</option>
+        <option>DivineMentor</option>
+        <option>AncientArchivist</option>
+        <option>GuardianOfWisdom</option>
+        <option>TacticalAdvisor</option>
+        <option>MysticPhilosopher</option>
+      </select>
+
+      <label>Mood</label>
+      <select x-model="mood" class="marble greek-border oracle-text p-2">
+        <option>Stoic</option>
+        <option>Wise</option>
+        <option>Stern</option>
+        <option>Noble</option>
+        <option>Prophetic</option>
+        <option>Mysterious</option>
+      </select>
+
+      <label>Divine Trait</label>
+      <select x-model="divineTrait" class="marble greek-border oracle-text p-2">
+        <option>Wisdom</option>
+        <option>Strategy</option>
+        <option>Justice</option>
+        <option>Knowledge</option>
+        <option>Prophecy</option>
+      </select>
+
+      <label>Style</label>
+      <input x-model="style"
+        class="marble greek-border oracle-text p-2"
+        placeholder="Ancient tone...">
+
+      <label>Expertise</label>
+      <input x-model="expertise"
+        class="marble greek-border oracle-text p-2"
+        placeholder="Knowledge domains...">
+
+      <label>Avoid</label>
+      <input x-model="useAvoid"
+        class="marble greek-border oracle-text p-2"
+        placeholder="Forbidden topics...">
+
+      <button @click="SaveMind()"
+        class="mt-2 greek-border oracle-text py-2 hover:bg-[#2a2a44]">
+        ΣAVE TO TEMPLE
+      </button>
+
+    </div>
+  </div>
+
+</div>
 
 <script src="index.js"></script>
+</body>
+</html>
