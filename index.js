@@ -12,7 +12,10 @@ function Altair() {
         responseLength: "Short (10–80 words)",
         creativity: "low",
 
+        isThinking: false,
+
         aiModel: "llama3",
+        isOnline: false,
 
         memory: "",
         systemPrompt: "",
@@ -22,8 +25,10 @@ function Altair() {
         mute: true,
         muteTxt: "UNMUTE",
 
-        init() {
-            this.result = "JARVIS online.";
+        initSystem() {
+            this.result = `${this.name} online.`;
+
+            this.IsOnline();
 
             try {
                 const cookies = document.cookie.split(";").map(c => c.trim());
@@ -57,8 +62,12 @@ function Altair() {
             this.muteTxt = this.mute ? "UNMUTE" : "MUTE";
         },
 
-        async Main(userName = "User") {
+        async SendCommand(userName = "User") {
             if (!this.command.trim()) return;
+
+            this.buildMind();
+
+            this.isThinking = true;
 
             this.memory += `\n User: ${this.command}`;
             this.command = "";
@@ -92,6 +101,22 @@ function Altair() {
 
                 this.command = "";
 
+                this.isThinking = false;
+
+            } catch (err) {
+                this.result = "Error: " + err.message;
+            }
+        },
+
+        async IsOnline() {
+            try {
+                const response = await fetch("http://localhost:11434/api/tags");
+
+                const data = await response.json();
+
+                this.isOnline = (data.models.length > 0) ? true : false;
+                this.aiModel = data.models[0].name;
+                
             } catch (err) {
                 this.result = "Error: " + err.message;
             }

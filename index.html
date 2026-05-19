@@ -3,125 +3,279 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A.L.T.A.I.R</title>
+<title>ALTΛIR • NEURAL CHAT CORE</title>
 
+<!-- Tailwind + Alpine + Fonts -->
 <script src="https://cdn.tailwindcss.com"></script>
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
 <style>
-body {
-    font-family: 'Orbitron', sans-serif;
-    background: radial-gradient(circle at center, #0a0705, #000);
-    overflow: hidden;
-}
-
-/* ORANGE ENERGY PULSE */
-@keyframes pulse {
-    0% { transform: scale(1); opacity: 0.5; box-shadow: 0 0 20px #fb923c; }
-    50% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 60px #f97316, 0 0 120px #fb923c; }
-    100% { transform: scale(1); opacity: 0.5; box-shadow: 0 0 20px #fb923c; }
-}
-
-.core {
-    animation: pulse 2.5s infinite;
-}
-
-/* glowing borders */
-.glow {
-    box-shadow: 0 0 15px #fb923c, 0 0 40px #f97316;
-}
-
-/* subtle grid background */
-.grid-bg {
-    background-image:
-        linear-gradient(rgba(249,115,22,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(249,115,22,0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
-}
+    * {
+        user-select: none;
+    }
+    body {
+        font-family: 'Orbitron', monospace;
+        background: radial-gradient(ellipse at 40% 50%, #0e0a05 0%, #000000 100%);
+        overflow: hidden;
+    }
+    /* enhanced ORANGE plasma core */
+    @keyframes plasmaPulse {
+        0% { transform: scale(1); opacity: 0.4; box-shadow: 0 0 30px #ff8c42, 0 0 60px #f97316; }
+        40% { transform: scale(1.08); opacity: 0.9; box-shadow: 0 0 70px #fb923c, 0 0 140px #ea580c, 0 0 200px #ff7b2c; }
+        70% { transform: scale(1.02); opacity: 0.8; box-shadow: 0 0 50px #f97316, 0 0 110px #ff5e00; }
+        100% { transform: scale(1); opacity: 0.4; box-shadow: 0 0 30px #ff8c42, 0 0 60px #f97316; }
+    }
+    @keyframes ringRotate {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    @keyframes flicker {
+        0% { opacity: 0.6; text-shadow: 0 0 2px #fb923c; }
+        100% { opacity: 1; text-shadow: 0 0 8px #ff9f4a; }
+    }
+    .core-plasma {
+        animation: plasmaPulse 2.2s infinite ease-in-out;
+    }
+    .orbital-ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 220px;
+        height: 220px;
+        margin-left: -110px;
+        margin-top: -110px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(251, 146, 60, 0.5);
+        border-top: 2px solid #fb923c;
+        border-right: 2px solid #ff7b2c;
+        animation: ringRotate 8s linear infinite;
+        pointer-events: none;
+    }
+    .orbital-ring-second {
+        width: 280px;
+        height: 280px;
+        margin-left: -140px;
+        margin-top: -140px;
+        border: 1px solid rgba(249, 115, 22, 0.3);
+        border-bottom: 2px solid #f97316;
+        border-left: 1px solid #ffb347;
+        animation: ringRotate 12s reverse linear infinite;
+    }
+    .glow-border-intense {
+        box-shadow: 0 0 10px #fb923c, inset 0 0 8px rgba(255, 107, 0, 0.6);
+    }
+    /* futuristic scanlines */
+    .scanlines {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(0deg, rgba(0,0,0,0.12) 0px, rgba(0,0,0,0.12) 2px, transparent 2px, transparent 6px);
+        pointer-events: none;
+        z-index: 10;
+    }
+    .grid-bg-enhanced {
+        background-image: 
+            linear-gradient(rgba(249,115,22,0.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(249,115,22,0.08) 1px, transparent 1px);
+        background-size: 35px 35px;
+    }
+    /* console style */
+    .console-scroll {
+        scroll-behavior: smooth;
+        overflow-y: auto;
+        font-family: 'Share Tech Mono', monospace;
+    }
+    .console-scroll::-webkit-scrollbar {
+        width: 4px;
+    }
+    .console-scroll::-webkit-scrollbar-track {
+        background: #1c1108;
+    }
+    .console-scroll::-webkit-scrollbar-thumb {
+        background: #fb923c;
+        border-radius: 10px;
+    }
+    .command-input {
+        background: #0a0502;
+        transition: all 0.2s;
+    }
+    .command-input:focus {
+        box-shadow: 0 0 12px #fb923c;
+        border-color: #ff9f4a;
+        outline: none;
+    }
+    .typing-effect {
+        border-right: 2px solid #fb923c;
+        animation: blinkCursor 0.8s step-end infinite;
+    }
+    @keyframes blinkCursor {
+        0%, 100% { border-color: #fb923c; }
+        50% { border-color: transparent; }
+    }
+    .neural-badge {
+        background: rgba(0,0,0,0.6);
+        backdrop-filter: blur(2px);
+    }
+    /* realistic data badge */
+    .stat-value {
+        font-family: 'Share Tech Mono', monospace;
+        letter-spacing: 0.5px;
+    }
 </style>
 </head>
+<body>
 
-<body class="text-orange-200">
+<div class="scanlines"></div>
+<div class="absolute inset-0 grid-bg-enhanced opacity-30 pointer-events-none"></div>
 
-<!-- BACKGROUND GRID -->
-<div class="absolute inset-0 grid-bg opacity-40"></div>
+<!-- MAIN INTERFACE with Alpine Core -->
+<div class="relative grid grid-cols-3 h-screen" x-data="Altair()" x-init="initSystem()">
 
-<!-- MAIN LAYOUT -->
-<div class="relative grid grid-cols-3 h-screen" x-data="Altair()">
-
-    <!-- LEFT PANEL -->
-    <div class="border-r border-orange-900 p-6 bg-black/40">
-        <h1 class="text-3xl font-bold text-orange-400 tracking-widest" x-text="name"> </h1>
-
-        <p class="text-xs text-orange-500 mt-1" x-text="meaning"></p>
-
-        <div class="mt-8 space-y-2 text-sm text-orange-200/80">
-            <p>STATUS: <span class="text-green-400">ONLINE</span></p>
-            <p>MODE: NEURAL CORE</p>
-            <p>ENERGY: STABLE</p>
-            <p>VOICE: DISABLED</p>
+    <!-- LEFT PANEL: NEURAL SPECS with filled realistic values (no empty underscores) -->
+    <div class="border-r border-orange-800/90 p-6 bg-black/50 backdrop-blur-sm z-20">
+        <div class="flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></div>
+            <h1 class="text-3xl font-black text-orange-300 tracking-widest" x-text="name"></h1>
         </div>
+        <p class="text-[10px] text-orange-400/80 uppercase mt-1 tracking-[3px]" x-text="meaning"></p>
 
-        <div class="mt-10 p-3 border border-orange-800 bg-orange-950/20 rounded">
-            <p class="text-xs text-orange-400">SYSTEM LOG</p>
-            <p class="text-xs mt-2 text-orange-200/70">
-                > Reactor synced<br>
-                > Memory lattice stable<br>
-                > Awaiting command signal
-            </p>
-        </div>
-    </div>
-
-    <!-- CENTER CORE -->
-    <div class="flex flex-col items-center justify-center">
-
-        <div class="relative">
-            <div class="w-48 h-48 rounded-full bg-orange-500/10 glow core"></div>
-
-            <div class="absolute inset-0 flex items-center justify-center text-orange-300 text-xl tracking-widest" x-text="name"> </div>
-        </div>
-
-        <p class="mt-6 text-orange-400 text-sm tracking-wider">
-            NEURAL CORE ACTIVE • STANDBY MODE
-        </p>
-
-        <div class="mt-8 text-xs text-orange-500 space-y-1 text-center">
-            <p>Quantum Sync: ONLINE</p>
-            <p>Prediction Engine: READY</p>
-            <p>Stability Index: 99.8%</p>
-        </div>
-
-    </div>
-
-    <!-- RIGHT PANEL -->
-    <div class="border-l border-orange-900 p-6 bg-black/40 flex flex-col">
-
-        <h2 class="text-orange-400 text-lg mb-4 tracking-widest">
-            CONSOLE
-        </h2>
-
-        <pre class="whitespace-pre-wrap break-words" x-text="memory"></pre>
-
-        <div class="mt-4 flex">
-            <input
-              type="text"
-              x-model="command"
-              placeholder="Enter command..."
-              class="w-full bg-black border border-orange-700 text-orange-300 p-2 outline-none"
-            >
-
-            <div class="px-4 py-2 bg-orange-700 text-black text-xs font-bold" x-on:click="Main('')">
-                SEND
+        <!-- LIVE STATUS BLOCKS - ALL FIELDS POPULATED, NO EMPTY SPACES -->
+        <div class="mt-8 space-y-3 text-xs font-mono">
+            <div class="flex justify-between border-b border-orange-800/50 pb-1">
+                <span class="text-orange-400/70">AI CORE</span>
+                <span class="font-bold"  :class="isOnline ? 'text-emerald-400' : 'text-red-500'" x-text="isOnline ? 'Online' : 'Offline'"></span>
+            </div>
+            <div class="flex justify-between border-b border-orange-800/50 pb-1">
+                <span class="text-orange-400/70">MODEL</span>
+                <span class="text-orange-300" x-text="aiModel"></span>
+            </div>
+            <div class="flex justify-between border-b border-orange-800/50 pb-1">
+                <span class="text-orange-400/70">MODE</span>
+                <span class="text-cyan-300 stat-value"></span> <!--No Code-->
+            </div>
+            <div class="flex justify-between border-b border-orange-800/50 pb-1">
+                <span class="text-orange-400/70">LAN.</span>
+                <span class="text-orange-300">EN</span> <!--No Code-->
             </div>
         </div>
 
+        <!-- holographic memory core indicator - FILLED with dynamic data -->
+        <div class="mt-10 p-3 border-l-4 border-orange-500 bg-black/40 rounded-r-md">
+            <div class="flex justify-between text-[11px]">
+                <span class="text-orange-400">◉ MEMORY CACHE</span>
+                <span class="text-orange-300 font-mono stat-value" >0%</span> <!--No Code-->
+            </div>
+            <div class="w-full bg-orange-950/60 h-1.5 mt-1 rounded-full overflow-hidden">
+                <div class="bg-gradient-to-r from-orange-600 to-orange-400 h-full rounded-full transition-all duration-500" :style="'width: '"></div>
+            </div>
+            <p class="text-[10px] text-orange-400/60 mt-2 font-mono tracking-wider">[ QUANTUM RESONANCE ACTIVE ]</p>
+        </div>
+
+        <!-- Clean realistic system info - removed extra decorative bullet items, just essential realistic data -->
+        <div class="mt-6 text-[11px] text-orange-500/80 space-y-2 font-mono">
+            <div class="flex justify-between">
+                <span>> TOTAL SESSIONS</span> <!--No Code-->
+                <span class="text-orange-300 stat-value">0</span>
+            </div>
+            <div class="flex justify-between">
+                <span>> MESSAGE QUEUE</span> <!--No Code-->
+                <span class="text-orange-300 stat-value">0</span>
+            </div>
+            <div class="flex justify-between"> 
+                <span>> RESPONSE TIME</span> <!--No Code-->
+                <span class="text-orange-300 stat-value" >0ms</span>
+            </div>
+        </div>
     </div>
 
+    <!-- CENTER CORE: futuristic orb + dynamic stats-->
+    <div class="flex flex-col items-center justify-center relative z-10">
+        <!-- double orbital rings -->
+        <div class="relative">
+            <div class="orbital-ring"></div>
+            <div class="orbital-ring orbital-ring-second"></div>
+            
+            <!-- main plasma sphere -->
+            <div class="w-56 h-56 rounded-full bg-gradient-to-br from-orange-600/15 via-orange-500/10 to-transparent core-plasma glow-border-intense flex items-center justify-center">
+                <div class="w-44 h-44 rounded-full bg-orange-600/5 backdrop-blur-sm border border-orange-400/30 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-orange-300 text-2xl font-black tracking-[5px]" x-text="name"></div>
+                        <div class="text-[10px] text-orange-400/80 mt-1">v2.0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- energy particles effect -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full border border-dashed border-orange-500/30 animate-pulse"></div>
+        </div>
+
+        <div class="mt-6">
+           <p
+              class="text-sm text-center tracking-widest font-bold flex items-center gap-2"
+              :class="isOnline ? 'text-emerald-400' : 'text-red-500'"
+              x-text="isOnline ? 'Online' : 'Offline'">
+          </p>
+            <div class="flex gap-4 mt-4 text-[11px] font-mono text-orange-300/80">
+                 <p class="text-center">Powered by <span x-text="aiModel"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT PANEL: AI CHAT CONSOLE with memory log & chat interaction -->
+    <div class="border-l border-orange-800/90 p-5 bg-black/50 backdrop-blur-sm flex flex-col z-20">
+        <div class="flex justify-between items-center mb-3">
+            <h2 class="text-orange-400 text-base tracking-[3px] font-bold flex items-center gap-2">
+                <span>◆ CONSOLE [CHAT]</span>
+                <span class="text-[9px] text-orange-500/70 font-mono">altair.terminal</span>
+            </h2>
+            <div class="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_8px_orange]"></div>
+        </div>
+
+        <!-- dynamic chat log with AI responses -->
+        <div class="flex-1 bg-black/30 rounded-md border border-orange-800/40 p-3 overflow-hidden">
+            <div class="h-128 console-scroll pr-1" x-ref="chatContainer">
+                <pre class="whitespace-pre-wrap break-words text-orange-400/70" x-text="memory"></pre>
+                <div x-show="isThinking" class="text-orange-400/70 text-xs font-mono flex items-center gap-1">
+                    <span>⟡ ALTΛIR is processing</span>
+                    <span class="animate-pulse">...</span>
+                </div>
+                <div x-ref="scrollAnchor"></div>
+            </div>
+        </div>
+
+        <!-- input area with enhanced design & AI command logic -->
+        <div class="mt-4 flex flex-col gap-2">
+            <div class="flex w-full">
+                <input 
+                    type="text"
+                    x-model="command"
+                    @keyup.enter="SendCommand()"
+                    placeholder=">_  initiate command or ask anything..."
+                    class="command-input w-full bg-black/80 border border-orange-700/80 text-orange-200 p-2.5 text-sm font-mono outline-none rounded-l-md"
+                    :class="{'border-orange-400': commandFocus}"
+                    @focus="commandFocus = true"
+                    @blur="commandFocus = false"
+                >
+                <div 
+                    @click="SendCommand()"
+                    class="px-5 bg-gradient-to-r from-orange-700 to-orange-600 text-black font-bold text-xs tracking-wider flex items-center cursor-pointer transition-all hover:shadow-[0_0_12px_#fb923c] rounded-r-md"
+                >
+                    SEND
+                </div>
+            </div>
+            <div class="flex justify-between text-[9px] text-orange-500/70 font-mono">
+                <span>⏎ ENTER to transmit</span>
+                <span>AI RESPONSE READY</span>
+            </div>
+        </div>
+        <div class="mt-3 pt-2 border-t border-orange-800/40 text-[10px] text-orange-500/50 font-mono flex justify-between">
+            <span>SESSION: <span class="stat-value" >0x7E4</span></span> <!--No Code-->
+            <span>LATENCY <span class="stat-value" >0</span> ns</span> <!--No Code-->
+        </div>
+    </div>
 </div>
 
-</body>
 <script src="index.js"></script>
-
-</html>
