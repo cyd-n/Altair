@@ -1,14 +1,14 @@
-# ATHENA — Local AI Assistant
+# Altair — Local AI Assistant
 
-A configurable AI assistant powered by Ollama, inspired by the Greek goddess Athena. Built with vanilla JavaScript and Alpine.js. Runs entirely locally — no API keys, no cloud, no cost.
+A configurable AI assistant powered by Ollama, inspired by the Greek goddess Altair. Built with vanilla JavaScript and Alpine.js. Runs entirely locally — no API keys, no cloud, no cost.
 
 ---
 
 ## What is it?
 
-Athena is a complete rewrite of the original Gemini-powered Athena. It now runs on Ollama — meaning all AI inference happens on your machine. Private, free, offline-capable.
+Altair is a complete rewrite of the original Gemini-powered Altair. It now runs on Ollama — meaning all AI inference happens on your machine. Private, free, offline-capable.
 
-The assistant takes on the persona of Athena, the Greek goddess of wisdom, strategy and knowledge — configurable through moods, job roles and divine traits.
+The assistant takes on the persona of Altair, the Greek goddess of wisdom, strategy and knowledge — configurable through moods, job roles and divine traits.
 
 ---
 
@@ -22,7 +22,7 @@ The assistant takes on the persona of Athena, the Greek goddess of wisdom, strat
 | Internet required | Yes | No |
 | API key required | Yes | No |
 | Models | Gemini 2.0/2.5 | Any Ollama model |
-| Persona | Generic AI assistant | Greek goddess Athena |
+| Persona | Generic AI assistant | Greek goddess Altair |
 | Mood system | Friendly, Professional etc | Stoic, Wise, Stern, Noble, Prophetic, Mysterious |
 
 ---
@@ -30,11 +30,11 @@ The assistant takes on the persona of Athena, the Greek goddess of wisdom, strat
 ## Features
 
 - **Local AI** — runs on Ollama, fully offline capable
-- **Greek goddess persona** — Athena speaks with ancient wisdom and strategic intelligence
+- **Greek goddess persona** — Altair speaks with ancient wisdom and strategic intelligence
 - **6 mood states** — Stoic, Wise, Stern, Noble, Prophetic, Mysterious
 - **Job roles** — Strategist, Oracle, Scholar, War Counselor, Keeper of Knowledge, Divine Mentor, Ancient Archivist, Guardian of Wisdom, Tactical Advisor, Mystic Philosopher
-- **Divine trait system** — customize Athena's core philosophical trait
-- **Text-to-speech** — Athena speaks her responses aloud
+- **Divine trait system** — customize Altair's core philosophical trait
+- **Text-to-speech** — Altair speaks her responses aloud
 - **Conversation memory** — full session history sent with each request
 - **Dynamic model selection** — use any model installed in Ollama
 - **Mute toggle** — silence TTS when not needed
@@ -75,7 +75,7 @@ The assistant takes on the persona of Athena, the Greek goddess of wisdom, strat
 ## How it works
 
 ```
-User configures Athena — mood, job, divine trait, expertise
+User configures Altair — mood, job, divine trait, expertise
         │
         ▼
 System prompt built dynamically from configuration
@@ -120,11 +120,11 @@ ollama pull mistral         # reliable general purpose
 3. Click **SYSTEM**
 4. Select your model, mood, job and divine trait
 5. Click **SAVE**
-6. Start talking to Athena
+6. Start talking to Altair
 
 ---
 
-## Recommended Models for Athena
+## Recommended Models for Altair
 
 | Model | Best mood pairing | Why |
 |-------|-----------------|-----|
@@ -152,7 +152,7 @@ ollama pull mistral         # reliable general purpose
 ```
 index.html          Main UI — terminal interface
 JavaScript/
-  index.js          Athena logic — AI calls, state, system prompt
+  index.js          Altair logic — AI calls, state, system prompt
 ```
 
 ---
