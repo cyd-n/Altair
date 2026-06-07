@@ -1,0 +1,18 @@
+Dynamic model selector - Dropdown of all installed Ollama models
+Streaming responsesText appears word by word — feels alive
+Auto scroll to bottom what jumps to latest message automatically
+Message count tracker Fill the "MESSAGE QUEUE: 0" stat
+Response time trackerFill the "RESPONSE TIME: 0ms" stat — measure fetch time
+Memory % barFill the empty memory cache bar with actual conversation length
+Ctrl+Enter shortcutSend without clicking
+-------------------------------------------------------------------------------
+
+Conversation export Download chat as .txt file
+Multiple personas Switch between different system prompts
+Command historyArrow up/down to navigate previous commands
+Markdown renderingFormat code blocks and bold text in responses
+Voice inputSpeak instead of type
+Sound effectsSubtle sci-fi beeps on send/receive
+-------------------------------------------------------------------------------
+
+
